@@ -33,20 +33,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     println!("Body: {:?}", body);
 
-    // while let Some(next) = response.frame().await {
-    //     let frame = next?;
-    //     if let Some(chunk) = frame.data_ref() {
-    //         stdout().write_all(chunk).await?;
-    //     }
-    // }
+    while let Some(next) = response.frame().await {
+        let frame = next?;
+        if let Some(chunk) = frame.data_ref() {
+            stdout().write_all(chunk).await?;
+        }
+    }
     Ok(())
 }
 
-// use http_body_util::BodyExt;
+use http_body_util::BodyExt;
 use http_body_util::Empty;
 use hyper::body::Bytes;
 use hyper::Request;
 use hyper_util::rt::TokioIo;
-// use tokio::io::stdout;
-// use tokio::io::AsyncWriteExt as _;
+use tokio::io::stdout;
+use tokio::io::AsyncWriteExt as _;
 use tokio::net::TcpStream;
